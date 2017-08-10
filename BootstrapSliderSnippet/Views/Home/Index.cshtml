@@ -69,3 +69,39 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+<br />
+<div class="row">
+    <div id="map"></div>
+
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12
+        });
+        var geocoder = new google.maps.Geocoder();
+        geocodeAddress(geocoder, map);
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = "Møllevej, 4, 9400 Nørresundby";
+
+        geocoder.geocode({ 'address': address }, function (results, status)
+        {
+            if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+
+                // Indsæt marker ved lokationen
+                var marker = new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location
+                });
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+      }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwqkKczdOJm5ldLTno6NDDGS9jvZmjuFg&callback=initMap">
+    </script>
+</div>
